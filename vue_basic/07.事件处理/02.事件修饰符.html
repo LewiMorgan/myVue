@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修饰符</title>
+    <!--引入Vue-->
+    <script src="../js/vue.js" type="text/javascript"></script>
+    <style>
+        *{
+            margin-top: 20px;
+
+        }
+        .box{
+            height: 50px;
+            background: aquamarine;
+        }
+        .box2{
+            height: 50px;
+            background: aquamarine;
+        }
+        .box3{
+            background: orange;
+        }
+        .list{
+            height: 200px;
+            width: 200px;
+            background: beige;
+            overflow: auto;
+        }
+        li{
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+<!--创建一个容器-->
+<div id="root">
+    <!-- 阻止默认事件（常用） -->
+    <a href="https://www.baidu.com" @click.prevent="showInfo">点我跳转？</a>
+    <!-- 阻止事件冒泡（常用） -->
+    <div class="box" @click="showInfo2">
+        <button @click.stop=showInfo2>冒泡事件</button>
+    </div>
+    <!-- 事件只触发一次（常用） -->
+    <button @click.once=showInfo2>冒泡事件</button>
+    <!-- 使用事件的捕获模式  先执行外面 捕获 后在冒泡-->
+    <div class="box2" @click.capture="showmsk(1)">box2
+        <div class="box3" @click="showmsk(2)">box3</div>
+    </div>
+    <!-- 只有event.target是当前操作的元素时才触发事件； -->
+    <div class="box" @click.self="showInfo">
+        <button @click="showInfo">点我提示信息</button>
+    </div>
+    <!-- 事件的默认行为立即执行，无需等待事件回调执行完毕； -->
+    <ul @wheel.passive="demo" class="list">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip  = false;//阻止vue在启动时生成生产提示
+
+    //创建vue实例
+    const vm = new Vue({
+        el:'#root',
+        data:{
+            name:'atguigu',
+        },
+        methods:{
+            showInfo(e) {
+                alert('别吃~~,阻止默认事件')
+            },
+            showInfo2(e) {
+                alert('别**冒泡')
+            },
+            showmsk(msk){
+                console.log(msk)
+            },
+            demo(){
+                for (let i=1;i<10000;i++){
+                    console.log('#');
+                }
+                console.log('cle');
+            }
+        }
+    })
+
+</script>
+</html>

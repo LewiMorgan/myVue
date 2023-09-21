@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--引入Vue-->
+    <script src="../js/vue.js" type="text/javascript"></script>
+</head>
+<body>
+<!--创建一个容器-->
+<div id="root">
+    <app></app>
+</div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip  = false;//阻止vue在启动时生成生产提示
+    const student = Vue.extend({
+        template:`
+        <div>
+            <h2>{{name}}</h2>
+            <h2>{{age}}</h2>
+        </div>
+        `,
+        data(){
+            return {
+                name:'lewi',
+                age:18
+            }
+        }
+
+    })
+    const school = Vue.extend({
+        template:`
+        <div>
+        <h2>{{name}}</h2>
+        <h2>{{adress}}</h2>
+        <student></student>
+        </div>
+        `,
+        data(){
+            return {
+                name:'atguigu',
+                adress:'beijing'
+            }
+        },
+        components:{
+            student
+        }
+    })
+    const hello = Vue.extend({
+        template:`
+        <div>
+            {{msg}}
+        </div>
+        `,
+        data(){
+            return {
+                msg:'welcome to atguigu'
+            }
+        }
+    })
+    const app = Vue.extend({
+        template:`
+          <div>
+          <school></school>
+          <hello></hello>
+          </div>
+        `,
+        components:{
+            school,
+            hello
+        }
+    })
+
+    new Vue({
+        // template:`
+        //   <app></app>
+        // `,
+        el:'#root',
+        components:{
+            app
+        }
+    })
+
+</script>
+</html>

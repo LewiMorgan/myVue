@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--引入Vue-->
+    <script src="../js/vue.js" type="text/javascript"></script>
+</head>
+<body>
+<!--
+				v-for指令:创建一个模板 通过遍历来完成数据的展示
+						1.用于展示列表数据
+						2.语法：v-for="(item, index) in xxx" :key="yyy"
+						3.可遍历：数组、对象、字符串（用的很少）、指定次数（用的很少）
+		-->
+<!--创建一个容器-->
+<!--需求：通过搜索框检索人员-->
+<div id="root">
+    <h2>人员列表</h2>
+    <input type="text" v-model="keyword">
+    <ul>
+        <li v-for="(p,index) in filpersons" :key="index">
+            {{p.name}}-{{p.age}}-{{p.sex}}
+        </li>
+    </ul>
+</div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip  = false;//阻止vue在启动时生成生产提示
+    //创建vue实例
+    //watch写法
+    /*const vm = new Vue({
+        el: '#root',
+
+        data: {
+            persons: [{id: '001', name: '马冬梅', age: 18,sex:'女'},
+                {id: '002', name: '周冬雨', age: 20,sex:'女'},
+                {id: '003', name: '周杰伦', age: 21,sex:'男'},
+                {id: '004', name: '温兆伦', age: 21,sex:'男'}
+            ],
+            keyword:'',//用来获取输入的数据
+            filpersons:[],
+        },
+        watch:{
+            //筛选数据 --》使用watch监视
+            keyword:{
+                immediate:true,//相当于传空值（开始时调用了handler一次） 匹配空值后生成全部的虚拟DOM
+                handler(val){
+                    //将过滤出来的数组赋值给新的数组（不要直接修改原数组）中 因为filter不会修改原数组 但是
+                    this.filpersons = this.persons.filter((p)=>{
+                        return p.name.indexOf(val) !== -1//判断名字中是否包含指定字符 没有字符返回-1
+                    })
+                }
+            }
+        }
+    })*/
+    //computed计算属性写法
+    const vm = new Vue({
+        el: '#root',
+        data: {
+            persons: [{id: '001', name: '马冬梅', age: 18,sex:'女'},
+                {id: '002', name: '周冬雨', age: 20,sex:'女'},
+                {id: '003', name: '周杰伦', age: 21,sex:'男'},
+                {id: '004', name: '温兆伦', age: 21,sex:'男'}
+            ],
+            keyword:'',//用来获取输入的数据
+        },
+        computed:{
+            filpersons(){
+                return this.persons.filter((p)=>{
+                    return p.name.indexOf(this.keyword) !== -1
+                    //计算属性的优势是可以不用监视keyword 当keyword改变时自动调用set
+                })
+            }
+        }
+    })
+</script>
+</html>
