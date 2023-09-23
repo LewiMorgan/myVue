@@ -23,9 +23,12 @@ Vue.config.productionTip = false
 new Vue({
 	el:'#app',
 	//render函数完成了这个功能：将App组件放入容器中
-  render: h => h(App),
+     render: h => h(App),
 	// render:q=> q('h1','你好啊')
-
+  /*  render(a){
+        return a('h2','你好')
+    }
+    render:a => a('h2','你好')*/
 	// template:`<h1>你好啊</h1>`,
 	// components:{App},
 })
