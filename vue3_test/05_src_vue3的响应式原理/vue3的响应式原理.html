@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+  //源数据
+  let person = {
+      name:'lewi',
+      age:18
+  }
+
+  const p = new Proxy(person,{//使用Proxy（代理）来完成增删改查的操作
+      // 拦截读取属性值
+      get(target,propName){//target指person propName是操作的属性
+          console.log(`有人读取了p上的${propName}属性`)
+          return Reflect.get(target,propName)//反射对象：对源数据进行操作
+      },
+      // 拦截设置属性值或添加新属性
+      set(target,propName,value){
+          console.log(`有人修改了p上的${propName}属性,更新界面`)
+          Reflect.set(target,propName,value)
+      },
+      // 拦截删除属性
+      deleteTarget(target,propName,value){
+          console.log(`有人删除了${propName}属性,更新界面`)
+          return Reflect.deleteProperty(target,propName)
+      },
+  })
+
+</script>
+</body>
+</html>
